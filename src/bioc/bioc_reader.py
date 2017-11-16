@@ -1,17 +1,15 @@
 __all__ = ['BioCReader']
 
-import StringIO
-
 from lxml import etree
 
-from bioc_annotation import BioCAnnotation
-from bioc_collection import BioCCollection
-from bioc_document import BioCDocument
-from bioc_location import BioCLocation
-from bioc_passage import BioCPassage
-from bioc_sentence import BioCSentence
-from bioc_node import BioCNode
-from bioc_relation import BioCRelation
+from bioc.bioc_annotation import BioCAnnotation
+from bioc.bioc_collection import BioCCollection
+from bioc.bioc_document import BioCDocument
+from bioc.bioc_location import BioCLocation
+from bioc.bioc_passage import BioCPassage
+from bioc.bioc_sentence import BioCSentence
+from bioc.bioc_node import BioCNode
+from bioc.bioc_relation import BioCRelation
 
 class BioCReader:
     """
@@ -45,10 +43,13 @@ class BioCReader:
             
     def _read_collection(self):
         collection_elem = self.xml_tree.xpath('/collection')[0]
-        
-        self.collection.source = collection_elem.xpath('source')[0].text
-        self.collection.date = collection_elem.xpath('date')[0].text
-        self.collection.key = collection_elem.xpath('key')[0].text
+
+        if len(collection_elem.xpath('source'))>0:
+            self.collection.source = collection_elem.xpath('source')[0].text
+        if len(collection_elem.xpath('date')) > 0:
+           self.collection.date = collection_elem.xpath('date')[0].text
+        if len(collection_elem.xpath('key')) > 0:
+            self.collection.key = collection_elem.xpath('key')[0].text
         
         infon_elem_list = collection_elem.xpath('infon')
         document_elem_list = collection_elem.xpath('document')
@@ -78,15 +79,19 @@ class BioCReader:
         for passage_elem in passage_elem_list:
             passage = BioCPassage()
             self._read_infons(passage_elem.xpath('infon'), passage)
-            passage.offset = passage_elem.xpath('offset')[0].text
-            
-            # Is this BioC document with <sentence>?
+            if len(passage_elem.xpath('offset')) > 0:
+                passage.offset = passage_elem.xpath('offset')[0].text
+            else:
+                passage.offset = 0
+
+                # Is this BioC document with <sentence>?
             if len(passage_elem.xpath('sentence')) > 0:
                 self._read_sentences(passage_elem.xpath('sentence'),
                                     passage)
             else:
                 # Is the (optional) text element available?
-		try:
+		
+                try:
                     passage.text = passage_elem.xpath('text')[0].text
                 except:
                     pass

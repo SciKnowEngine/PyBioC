@@ -1,7 +1,7 @@
 __all__ = ['BioCSentence']
 
 
-from meta import _MetaAnnotations, _MetaInfons, _MetaOffset, \
+from bioc.meta import _MetaAnnotations, _MetaInfons, _MetaOffset, \
                       _MetaRelations, _MetaText
                       
 

@@ -2,6 +2,7 @@ __all__ = ['BioCWriter']
 
 from lxml.builder import E
 from lxml.etree import tostring
+from tqdm import tqdm
 
 class BioCWriter:
     
@@ -30,7 +31,7 @@ class BioCWriter:
                     pretty_print=True, 
                     doctype=self.doctype)
                     
-        return s
+        return s.decode("utf-8")
     
     def _check_for_data(self):
         if self.collection is None:
@@ -77,7 +78,7 @@ class BioCWriter:
             infon_elem.text = infon_val
             
     def _build_documents(self, documents_list, collection_parent_elem):
-        for document in documents_list:
+        for document in tqdm(documents_list):
             collection_parent_elem.append(E('document', E('id')))
             document_elem = collection_parent_elem.xpath('document')[-1]
             # id

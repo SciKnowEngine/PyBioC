@@ -1,7 +1,7 @@
 __all__ = ['BioCCollection']
 
-from meta import _MetaInfons, _MetaIter
-from compat import _Py2Next
+from bioc.meta import _MetaInfons, _MetaIter
+from bioc.compat import _Py2Next
 
 class BioCCollection(_Py2Next, _MetaInfons, _MetaIter):
 
