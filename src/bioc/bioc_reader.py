@@ -82,7 +82,7 @@ class BioCReader:
             if len(passage_elem.xpath('offset')) > 0:
                 passage.offset = passage_elem.xpath('offset')[0].text
             else:
-                passage.offset = 0
+                passage.offset = '0'
 
                 # Is this BioC document with <sentence>?
             if len(passage_elem.xpath('sentence')) > 0:

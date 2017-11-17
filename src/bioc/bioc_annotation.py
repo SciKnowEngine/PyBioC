@@ -15,7 +15,7 @@ class BioCAnnotation(_MetaId, _MetaInfons, _MetaText):
             self.id = annotation.id
             self.infons = annotation.infons
             self.locations = annotation.locations
-            self.text = self.text
+            self.text = self.text   
 
     def __str__(self):
         s = 'id: ' + self.id + '\n'
