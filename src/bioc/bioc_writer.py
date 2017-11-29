@@ -140,8 +140,8 @@ class BioCWriter:
             for location in annotation.locations:
                 annotation_elem.append(E('location'))
                 location_elem = annotation_elem.xpath('location')[-1]
-                location_elem.attrib['offset'] = location.offset
-                location_elem.attrib['length'] = location.length
+                location_elem.attrib['offset'] = str(location.offset)
+                location_elem.attrib['length'] = str(location.length)
             # text
             annotation_elem.append(E('text'))
             text_elem = annotation_elem.xpath('text')[0]

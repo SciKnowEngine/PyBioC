@@ -1,6 +1,7 @@
 __all__ = ['BioCReader']
 
 from lxml import etree
+from tqdm import tqdm
 
 from bioc.bioc_annotation import BioCAnnotation
 from bioc.bioc_collection import BioCCollection
@@ -64,7 +65,7 @@ class BioCReader:
                                             infon_elem.text)
 
     def _read_documents(self, document_elem_list):
-        for document_elem in document_elem_list:
+        for document_elem in tqdm(document_elem_list):
             document = BioCDocument()
             document.id = document_elem.xpath('id')[0].text
             self._read_infons(document_elem.xpath('infon'), document)
